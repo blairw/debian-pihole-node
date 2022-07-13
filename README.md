@@ -1,2 +1,148 @@
 # debian-pihole-node
 Instructions for a minimalist Debian Pi-hole server (e.g., running as a VirtualBox virtual machine)
+
+## Why?
+
+- I want to use Pi-hole.
+- I don't want to use the Docker image because I want a bit more control over the settings.
+- Debian is lightweight and stable, which is good for being able to set the RAM quite low and keep things still functional. I like Fedora but I wouldn't use it here, it's a bit heavy and SELinux will cause trouble for Pi-hole.
+
+## Download Installer
+
+These instructions are based on `debian-11.4.0-amd64-DVD-1.iso` from https://mirror.aarnet.edu.au/pub/debian-cd/current/amd64/iso-dvd/
+
+## Virtual Machine Configuration
+
+- RAM: 512MB as recommended by Pi-hole
+- SSD: 8GB (already quite generous, this is the VirtualBox default this is double what is recommended by Pi-hole)
+
+## Installation of Debian
+
+- Use normal install, not graphical install, since we have only 512MB RAM
+- Continent = Oceania _(obviously, feel free to customise according to your needs)_
+- Country = Australia _(obviously, feel free to customise according to your needs)_
+- Keymap = American English (default)
+- DHCP will automatically run, just use `<Go Back>` to force Manual config
+- Set Name server address to default, I'm sure we can come back for it later
+- Set Hostname (e.g., `sushi`)
+- Domain name set to blank (default)
+- Set root password
+- Username (e.g., `sushichef`)
+- Set password
+- Timezone = New South Wales _(obviously, feel free to customise according to your needs)_
+- Guided - use entire disk (default: doesn't use LVM)
+- All files in one partition
+- Scan extra installation media? = `<No>`
+- Network mirror = `<No>`
+- Package usage survey = `<No>`
+- Choose software to install:
+	- `[*] SSH server`
+	- `[*] Standard system utilities`
+	- nothing else!
+- Install the GRUB boot loader to your primary drive? `<Yes>`
+- Choose `/dev/sda`
+
+## Configuration Part 1 - set up package manager
+
+Login to root, `su -`, and then `nano /etc/apt/sources.list`
+
+Set to the following:
+
+```
+deb http://mirror.aarnet.edu.au/debian/ bullseye main contrib
+deb-src http://mirror.aarnet.edu.au/debian/ bullseye main contrib
+
+deb http://mirror.aarnet.edu.au/debian/ bullseye-updates main contrib
+deb-src http://mirror.aarnet.edu.au/debian/ bullseye-updates main contrib
+
+deb http://security.debian.org/debian-security bullseye-security main contrib
+deb-src http://security.debian.org/debian-security bullseye-security main contrib
+```
+
+_(Feel free to change `aarnet.edu.au` mirror to any of your own choice, based on your geographical location.)_
+
+## Configuration Part 2 - install packages as root
+
+```bash
+apt-get update && apt-get upgrade
+apt install sudo git neofetch
+```
+
+Now edit `/etc/sudoers` to add:
+
+```
+sushichef ALL=(ALL:ALL) ALL
+```
+
+Now go back to the main user! (Get out of root)
+
+## Configuration Part 3 - setup Pi-hole
+
+As per https://docs.pi-hole.net/main/basic-install/#one-step-automated-install
+
+```zsh
+git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
+cd "Pi-hole/automated install/"
+sudo bash basic-install.sh
+```
+
+During setup:
+
+- Set upstream DNS provider to Quad9, unfiltered, no DNSSEC.
+- Allow the default blocklist (StevenBlack)
+- Install the admin interface, web server, and logging
+- Privacy mode for FTL = 0 (show everything)
+- Don't worry about the Admin Webpage login password, you can reset it later
+
+## Configuration Part 4 - HTTPS
+
+Generate self-signed certificate (adapted from https://redmine.lighttpd.net/projects/1/wiki/HowToSimpleSSL, https://discourse.pi-hole.net/t/enabling-https-for-your-pi-hole-web-interface/5771):
+
+```
+mkdir -p ~/selfsigned
+cd ~/selfsigned
+openssl req -new -x509 -keyout lighttpd.pem -out lighttpd.pem -days 99999 -nodes
+sudo chown www-data -R ~/selfsigned
+sudo apt-get install lighttpd-mod-openssl
+```
+
+Now, place the following into /etc/lighttpd/external.conf ...
+
+```
+$HTTP["host"] == "sushi" {
+  # Ensure the Pi-hole Block Page knows that this is not a blocked domain
+  setenv.add-environment = ("fqdn" => "true")
+
+  # Enable the SSL engine with a LE cert, only for this specific host
+  $SERVER["socket"] == ":443" {
+	ssl.engine = "enable"
+	ssl.pemfile = "/home/sushichef/selfsigned/lighttpd.pem"
+  }
+
+  # Redirect HTTP to HTTPS
+  $HTTP["scheme"] == "http" {
+	$HTTP["host"] =~ ".*" {
+	  url.redirect = (".*" => "https://%0$0")
+	}
+  }
+}
+```
+
+Now add `mod_openssl` to `server.modules` in `/etc/lighttpd/lighttpd.conf`
+
+Finally, `sudo service lighttpd restart`
+
+On any clients using Edge (cf. https://www.tecklyfe.com/how-to-access-site-with-neterr_cert_invalid-error-in-chrome-and-edge/):
+
+- Click anywhere on the page
+- Type `thisisunsafe` manually (NOTE: copy-paste doesn't work)
+- The page is now allowed
+
+
+From Debian, you can reset the Pi-hole password at any time by running:
+
+```bash
+sudo pihole -a -p
+```
+
+Happy Debian+Pi-hole adventures! 🐧
