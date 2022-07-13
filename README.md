@@ -106,7 +106,7 @@ sudo chown www-data -R ~/selfsigned
 sudo apt-get install lighttpd-mod-openssl
 ```
 
-Now, place the following into /etc/lighttpd/external.conf ...
+Now, place the following into `/etc/lighttpd/external.conf` ...
 
 ```
 $HTTP["host"] == "sushi" {
