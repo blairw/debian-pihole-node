@@ -51,7 +51,12 @@ When using Fedora Cockpit:
 	- VirtualBox: Choose `/dev/sda`
 	- KVM/Cockpit: Choose `/dev/vda`
 
-## Configuration Part 1 - set up package manager
+
+## Configuration Part 1 - set up networking
+
+Follow instructions at https://www.snel.com/support/how-to-configure-static-ip-on-debian-10/
+
+## Configuration Part 2 - set up package manager
 
 Login to root, `su -`, and then `nano /etc/apt/sources.list`
 
@@ -70,7 +75,7 @@ deb-src http://security.debian.org/debian-security bullseye-security main contri
 
 _(Feel free to change `aarnet.edu.au` mirror to any of your own choice, based on your geographical location.)_
 
-## Configuration Part 2 - install packages as root
+## Configuration Part 3 - install packages as root
 
 ```bash
 apt-get update && apt-get upgrade
@@ -85,7 +90,7 @@ sushichef ALL=(ALL:ALL) ALL
 
 Now go back to the main user! (Get out of root)
 
-## Configuration Part 3 - setup Pi-hole
+## Configuration Part 4 - setup Pi-hole
 
 As per https://docs.pi-hole.net/main/basic-install/#one-step-automated-install
 
@@ -103,7 +108,7 @@ During setup:
 - Privacy mode for FTL = 0 (show everything)
 - Don't worry about the Admin Webpage login password, you can reset it later
 
-## Configuration Part 4 - HTTPS
+## Configuration Part 5 - HTTPS
 
 Generate self-signed certificate (adapted from https://redmine.lighttpd.net/projects/1/wiki/HowToSimpleSSL, https://discourse.pi-hole.net/t/enabling-https-for-your-pi-hole-web-interface/5771):
 
