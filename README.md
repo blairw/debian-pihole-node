@@ -42,7 +42,8 @@ _(Based on recommendations provided by Fedora Cockpit Virtual Machines)_
 	- `[*] Standard system utilities`
 	- nothing else!
 - Install the GRUB boot loader to your primary drive? `<Yes>`
-- Choose `/dev/sda`
+	- VirtualBox: Choose `/dev/sda`
+	- KVM/Cockpit: Choose `/dev/vda`
 
 ## Configuration Part 1 - set up package manager
 
