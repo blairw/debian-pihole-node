@@ -13,8 +13,10 @@ These instructions are based on `debian-11.4.0-amd64-DVD-1.iso` from https://mir
 
 ## Virtual Machine Configuration
 
-- RAM: 512MB as recommended by Pi-hole
-- SSD: 8GB (already quite generous, this is the VirtualBox default this is double what is recommended by Pi-hole)
+_(Based on recommendations provided by Fedora Cockpit Virtual Machines)_
+
+- SSD: 10GiB
+- RAM: 1GiB
 
 ## Installation of Debian
 
