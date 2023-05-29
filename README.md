@@ -120,7 +120,9 @@ sudo chown www-data -R ~/selfsigned
 sudo apt-get install lighttpd-mod-openssl
 ```
 
-Now, place the following into `/etc/lighttpd/external.conf` ...
+Now, place the following into `/etc/lighttpd/conf-enabled/external.conf` ...
+
+(Source: https://discourse.pi-hole.net/t/external-conf-not-being-loaded-in-2023-1/60543/2)
 
 ```
 $HTTP["host"] == "sushi" {
