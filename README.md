@@ -115,7 +115,7 @@ Generate self-signed certificate (adapted from https://redmine.lighttpd.net/proj
 ```
 mkdir -p ~/selfsigned
 cd ~/selfsigned
-openssl req -new -x509 -keyout lighttpd.pem -out lighttpd.pem -days 99999 -nodes
+openssl req -new -x509 -keyout lighttpd.pem -out lighttpd.pem -days 99999 -nodes # just ENTER everything
 sudo chown www-data -R ~/selfsigned
 sudo apt-get install lighttpd-mod-openssl
 ```
