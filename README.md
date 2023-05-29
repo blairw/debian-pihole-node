@@ -18,6 +18,12 @@ _(Based on recommendations provided by Fedora Cockpit Virtual Machines)_
 - SSD: 10GiB
 - RAM: 1GiB
 
+When using Fedora Cockpit:
+
+- Do not run the VM right away after creating! Make sure you Edit it first.
+- Remove the default Network entry
+- Create a new Network entry set to **Direct Attachment to en1234** as per https://unix.stackexchange.com/questions/564353/passthrough-of-vms-to-local-network-bridging-fedora-31-server
+
 ## Installation of Debian
 
 - Use normal install, not graphical install, since we have only 512MB RAM
