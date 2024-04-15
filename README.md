@@ -28,7 +28,9 @@ When using Fedora Cockpit:
 
 - Use normal install, not graphical install, since we have only 512MB RAM
 - Continent = Oceania _(obviously, feel free to customise according to your needs)_
+	- Newer versions of Debian might not ask this
 - Country = Australia _(obviously, feel free to customise according to your needs)_
+  	- Or Country = Ireland if operating in Ireland
 - Keymap = American English (default)
 - DHCP will automatically run, just use `<Go Back>` to force Manual config
 - Set Name server address to default, I'm sure we can come back for it later
@@ -50,6 +52,7 @@ When using Fedora Cockpit:
 - Install the GRUB boot loader to your primary drive? `<Yes>`
 	- VirtualBox: Choose `/dev/sda`
 	- KVM/Cockpit: Choose `/dev/vda`
+   	- Newer versions of Debian migth not ask this
 
 
 ## Configuration Part 1 - set up networking
@@ -60,18 +63,33 @@ Follow instructions at https://www.snel.com/support/how-to-configure-static-ip-o
 
 Login to root, `su -`, and then `nano /etc/apt/sources.list`
 
-Set to the following:
+Set to the following if in Australia:
 
 ```
-deb http://mirror.aarnet.edu.au/debian/ bullseye main contrib
-deb-src http://mirror.aarnet.edu.au/debian/ bullseye main contrib
+deb http://mirror.aarnet.edu.au/debian/ bookworm main contrib
+deb-src http://mirror.aarnet.edu.au/debian/ bookworm main contrib
 
-deb http://mirror.aarnet.edu.au/debian/ bullseye-updates main contrib
-deb-src http://mirror.aarnet.edu.au/debian/ bullseye-updates main contrib
+deb http://mirror.aarnet.edu.au/debian/ bookworm-updates main contrib
+deb-src http://mirror.aarnet.edu.au/debian/ bookworm-updates main contrib
 
-deb http://security.debian.org/debian-security bullseye-security main contrib
-deb-src http://security.debian.org/debian-security bullseye-security main contrib
+deb http://security.debian.org/debian-security bookworm-security main contrib
+deb-src http://security.debian.org/debian-security bookworm-security main contrib
 ```
+
+Set to the following if in Europe:
+
+```
+deb http://ftp.no.debian.org/debian/ bookworm main contrib
+deb-src http://ftp.no.debian.org/debian/ bookworm main contrib
+
+deb http://ftp.no.debian.org/debian/ bookworm-updates main contrib
+deb-src http://ftp.no.debian.org/debian/ bookworm-updates main contrib
+
+deb http://security.debian.org/debian-security bookworm-security main contrib
+deb-src http://security.debian.org/debian-security bookworm-security main contrib
+```
+
+Replace bookworm with bullseye if using old version.
 
 _(Feel free to change `aarnet.edu.au` mirror to any of your own choice, based on your geographical location.)_
 
