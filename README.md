@@ -88,6 +88,13 @@ Now edit `/etc/sudoers` to add:
 sushichef ALL=(ALL:ALL) ALL
 ```
 
+To do so, do not use nano, do the following:
+
+```zsh
+export EDITOR=nano
+visudo
+```
+
 Now go back to the main user! (Get out of root)
 
 ## Configuration Part 4 - setup Pi-hole
