@@ -39,7 +39,7 @@ When using Fedora Cockpit:
 - Set root password
 - Username (e.g., `sushichef`)
 - Set password
-- Timezone = New South Wales _(obviously, feel free to customise according to your needs)_
+- If prompted: Timezone = New South Wales _(obviously, feel free to customise according to your needs)_
 - Guided - use entire disk (default: doesn't use LVM)
 - All files in one partition
 - Scan extra installation media? = `<No>`
@@ -52,7 +52,7 @@ When using Fedora Cockpit:
 - Install the GRUB boot loader to your primary drive? `<Yes>`
 	- VirtualBox: Choose `/dev/sda`
 	- KVM/Cockpit: Choose `/dev/vda`
-   	- Newer versions of Debian migth not ask this
+   	- Newer versions of Debian might not ask this
 
 
 ## Configuration Part 1 - set up networking
