@@ -43,7 +43,8 @@ When using Fedora Cockpit:
 - Guided - use entire disk (default: doesn't use LVM)
 - All files in one partition
 - Scan extra installation media? = `<No>`
-- Network mirror = `<No>`
+- Network mirror = `<Yes>`
+  	- And then select the server appropriate for your location
 - Package usage survey = `<No>`
 - Choose software to install:
 	- `[*] SSH server`
@@ -60,6 +61,8 @@ When using Fedora Cockpit:
 Follow instructions at https://www.snel.com/support/how-to-configure-static-ip-on-debian-10/
 
 ## Configuration Part 2 - set up package manager
+
+NOTE: This step is not necessary if the Network Mirror was set up in the initial installation of Debian above.
 
 Login to root, `su -`, and then `nano /etc/apt/sources.list`
 
