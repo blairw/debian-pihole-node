@@ -62,45 +62,20 @@ Follow instructions at https://www.snel.com/support/how-to-configure-static-ip-o
 
 ## Configuration Part 2 - set up package manager
 
-NOTE: This step is not necessary if the Network Mirror was set up in the initial installation of Debian above.
+NOTE: This step is NOT necessary if the Network Mirror was set up in the initial installation of Debian above.
 
 Login to root, `su -`, and then `nano /etc/apt/sources.list`
 
-Set to the following if in Australia:
+Remove the line about the cdrom.
 
-```
-deb http://mirror.aarnet.edu.au/debian/ bookworm main contrib
-deb-src http://mirror.aarnet.edu.au/debian/ bookworm main contrib
+This is also where you can change the mirror (e.g., to `http://mirror.aarnet.edu.au/debian/` in Australia or `http://ftp.no.debian.org/debian/` in Northern Europe e.g., Ireland, Norway).
 
-deb http://mirror.aarnet.edu.au/debian/ bookworm-updates main contrib
-deb-src http://mirror.aarnet.edu.au/debian/ bookworm-updates main contrib
-
-deb http://security.debian.org/debian-security bookworm-security main contrib
-deb-src http://security.debian.org/debian-security bookworm-security main contrib
-```
-
-Set to the following if in Europe:
-
-```
-deb http://ftp.no.debian.org/debian/ bookworm main contrib
-deb-src http://ftp.no.debian.org/debian/ bookworm main contrib
-
-deb http://ftp.no.debian.org/debian/ bookworm-updates main contrib
-deb-src http://ftp.no.debian.org/debian/ bookworm-updates main contrib
-
-deb http://security.debian.org/debian-security bookworm-security main contrib
-deb-src http://security.debian.org/debian-security bookworm-security main contrib
-```
-
-Replace bookworm with bullseye if using old version.
-
-_(Feel free to change `aarnet.edu.au` mirror to any of your own choice, based on your geographical location.)_
 
 ## Configuration Part 3 - install packages as root
 
 ```bash
 apt-get update && apt-get upgrade
-apt install sudo git neofetch
+apt install fastfetch git sudo
 ```
 
 Now edit `/etc/sudoers` to add:
