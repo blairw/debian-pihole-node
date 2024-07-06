@@ -75,7 +75,7 @@ This is also where you can change the mirror (e.g., to `http://mirror.aarnet.edu
 
 ```bash
 apt-get update && apt-get upgrade
-apt install fastfetch git sudo
+apt install git sudo
 ```
 
 Now edit `/etc/sudoers` to add:
